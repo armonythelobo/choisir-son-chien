@@ -407,11 +407,12 @@ function buildPrompt() {
   const details = QUESTIONS.map(q => {
     const ans = answers[q.id];
     if (!ans) return null;
+    if (q.type === 'text') return q.theme + ' : ' + ans;
     if (Array.isArray(ans)) {
       const labels = ans.map(v => q.options.find(o=>o.value===v)?.label).join(', ');
       return q.theme + ' : ' + labels;
     }
-    const label = q.options.find(o=>o.value===ans)?.label;
+    const label = q.options ? q.options.find(o=>o.value===ans)?.label : ans;
     return q.theme + ' : ' + label;
   }).filter(Boolean).join('\n');
 
