@@ -178,10 +178,10 @@
   <div class="paw-big">🐾</div>
   <h1>Quel chien est fait pour vous ?</h1>
   <p class="subtitle">Avant d'adopter ou d'acheter un chien, une erreur de choix peut être lourde de conséquences — pour vous et pour l'animal.</p>
-  <p class="subtitle">Antonio Rita, éducateur comportementaliste à Tourcoing, vous propose une <strong>pré-étude personnalisée</strong> : un questionnaire approfondi suivi d'une analyse IA professionnelle qui identifie les races compatibles avec votre mode de vie.</p>
+  <p class="subtitle">Antonio Rita, éducateur comportementaliste à Tourcoing, vous propose une <strong>pré-étude personnalisée</strong> : un questionnaire approfondi suivi par un professionnel qui identifie les races compatibles avec votre mode de vie.</p>
   <div class="features">
-    <div class="feat-row"><span>✅</span><span>8 thématiques analysées (logement, expérience, famille, budget...)</span></div>
-    <div class="feat-row"><span>🐕</span><span>Races recommandées et déconseillées avec explications</span></div>
+    <div class="feat-row"><span>✅</span><span>Thèmes analysés et personnalisés selon votre mode de vie</span></div>
+    <div class="feat-row"><span>🐕</span><span>Races recommandées et déconseillées avec explications, ainsi que la race souhaitée</span></div>
     <div class="feat-row"><span>👨‍💼</span><span>Conseil personnalisé d'un professionnel certifié</span></div>
     <div class="feat-row"><span>⚡</span><span>Résultat immédiat après le questionnaire</span></div>
   </div>
@@ -222,6 +222,10 @@
 
 <script>
 const QUESTIONS = [
+  { id:"nom", theme:"Vos coordonnées", icon:"👤", question:"Votre nom et prénom", type:"text" },
+  { id:"adresse", theme:"Vos coordonnées", icon:"📍", question:"Votre adresse postale", type:"text" },
+  { id:"email", theme:"Vos coordonnées", icon:"📧", question:"Votre adresse email", type:"text" },
+  { id:"race_souhaitee", theme:"Race souhaitée", icon:"🐕", question:"Avez-vous une race en tête ? (si oui, laquelle)", type:"text" },
   { id:"logement", theme:"Votre logement", icon:"🏠", question:"Où vivez-vous ?", type:"single", options:[
     {value:"maison_jardin",label:"Maison avec jardin clôturé"},
     {value:"maison_sans_jardin",label:"Maison sans jardin / jardin non clôturé"},
@@ -306,17 +310,32 @@ function renderQ() {
 
   const optDiv = document.getElementById('options');
   optDiv.innerHTML = '';
-  q.options.forEach(opt => {
-    const btn = document.createElement('button');
-    btn.className = 'opt-btn';
-    btn.textContent = opt.label;
-    const isSelected = q.type === 'multi'
-      ? (answers[q.id]||[]).includes(opt.value)
-      : answers[q.id] === opt.value;
-    if (isSelected) { btn.classList.add('selected'); btn.textContent = '✓ ' + opt.label; }
-    btn.onclick = () => handleAnswer(q.id, opt.value, q.type === 'multi');
-    optDiv.appendChild(btn);
-  });
+
+  if (q.type === 'text') {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.value = answers[q.id] || '';
+    input.placeholder = 'Votre réponse...';
+    input.style.cssText = 'width:100%;padding:14px 16px;font-size:15px;border:1.5px solid #EDD9B0;border-radius:12px;font-family:Georgia,serif;outline:none;';
+    // pour race souhaitée, pas obligatoire
+    if (q.id === 'race_souhaitee') {
+      input.placeholder = 'Si vous avez une race en tête (facultatif)';
+    }
+    input.oninput = () => { answers[q.id] = input.value; updateNav(); };
+    optDiv.appendChild(input);
+  } else {
+    q.options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'opt-btn';
+      btn.textContent = opt.label;
+      const isSelected = q.type === 'multi'
+        ? (answers[q.id]||[]).includes(opt.value)
+        : answers[q.id] === opt.value;
+      if (isSelected) { btn.classList.add('selected'); btn.textContent = '✓ ' + opt.label; }
+      btn.onclick = () => handleAnswer(q.id, opt.value, q.type === 'multi');
+      optDiv.appendChild(btn);
+    });
+  }
 
   document.getElementById('btn-back').style.display = currentQ > 0 ? 'block' : 'none';
   const isLast = currentQ === QUESTIONS.length - 1;
@@ -338,6 +357,8 @@ function handleAnswer(qId, value, isMulti) {
 function canNext() {
   const q = QUESTIONS[currentQ];
   const ans = answers[q.id];
+  if (q.id === 'race_souhaitee') return true; // facultatif
+  if (q.type === 'text') return !!(ans && ans.trim().length > 0);
   return q.type === 'multi' ? (ans && ans.length > 0) : !!ans;
 }
 
