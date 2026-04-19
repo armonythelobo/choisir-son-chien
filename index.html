@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pré-étude chien — Art'mony The Lobo</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-height: 100vh;
+    background: linear-gradient(160deg, #FDF8F0 0%, #F5EDD8 100%);
+    font-family: Georgia, 'Times New Roman', serif;
+    color: #1A1208;
+  }
+  .badge {
+    display: inline-block;
+    background: #D4830A;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  /* LANDING */
+  #landing {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 32px 20px 48px;
+    text-align: center;
+  }
+  .paw-big { font-size: 56px; margin-bottom: 8px; }
+  h1 { font-size: 28px; font-weight: bold; margin-bottom: 16px; line-height: 1.2; }
+  .subtitle { font-size: 15px; color: #5C4A2A; line-height: 1.6; margin-bottom: 12px; }
+  .features {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    margin: 24px 0;
+    text-align: left;
+    box-shadow: 0 2px 16px rgba(180,120,0,0.08);
+    border: 1px solid #EDD9B0;
+  }
+  .feat-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; font-size: 14px; color: #3D2B0E; line-height: 1.4; }
+  .feat-row span:first-child { font-size: 18px; flex-shrink: 0; }
+  .price-box { display: flex; flex-direction: column; align-items: center; margin: 16px 0; }
+  .price { font-size: 48px; font-weight: bold; color: #D4830A; line-height: 1; }
+  .price-label { font-size: 13px; color: #8B7355; font-family: Arial, sans-serif; }
+  .btn-paypal {
+    display: block;
+    background: linear-gradient(135deg, #D4830A, #B8690A);
+    color: #fff;
+    padding: 16px 24px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 20px rgba(212,131,10,0.35);
+    font-family: Arial, sans-serif;
+    transition: transform 0.15s, opacity 0.15s;
+  }
+  .btn-paypal:hover { transform: translateY(-1px); opacity: 0.92; }
+  .btn-demo {
+    display: block;
+    width: 100%;
+    background: transparent;
+    color: #8B4513;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 14px;
+    border: 1.5px solid #8B4513;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    transition: transform 0.15s;
+  }
+  .btn-demo:hover { transform: translateY(-1px); }
+  .footer-txt { margin-top: 32px; font-size: 12px; color: #A08060; font-family: Arial, sans-serif; }
+
+  /* QUIZ */
+  #quiz { max-width: 500px; margin: 0 auto; padding: 24px 20px 48px; display: none; }
+  .progress-bar { height: 6px; background: #EDD9B0; border-radius: 10px; margin-bottom: 8px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #D4830A, #B8690A); border-radius: 10px; transition: width 0.4s ease; }
+  .progress-txt { font-size: 12px; color: #A08060; text-align: right; margin-bottom: 24px; font-family: Arial, sans-serif; }
+  .q-icon { font-size: 40px; text-align: center; margin-bottom: 4px; }
+  .q-theme { font-size: 12px; color: #D4830A; text-transform: uppercase; letter-spacing: 2px; text-align: center; font-family: Arial, sans-serif; margin-bottom: 8px; }
+  .q-question { font-size: 20px; font-weight: bold; text-align: center; margin-bottom: 24px; line-height: 1.3; }
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .opt-btn {
+    background: #fff;
+    border: 1.5px solid #EDD9B0;
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 15px;
+    text-align: left;
+    cursor: pointer;
+    color: #1A1208;
+    transition: all 0.2s;
+    font-family: Georgia, serif;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+  }
+  .opt-btn:hover { border-color: #D4830A; background: rgba(212,131,10,0.04); }
+  .opt-btn.selected { background: linear-gradient(135deg, rgba(212,131,10,0.1), rgba(212,131,10,0.18)); border: 2px solid #D4830A; color: #8B4513; font-weight: bold; }
+  .nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 28px; gap: 12px; }
+  .btn-back { background: transparent; border: none; color: #A08060; font-size: 14px; cursor: pointer; font-family: Arial, sans-serif; }
+  .btn-next {
+    background: linear-gradient(135deg, #D4830A, #B8690A);
+    color: #fff; border: none; border-radius: 10px;
+    padding: 14px 28px; font-size: 15px; cursor: pointer;
+    font-weight: bold; margin-left: auto;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 16px rgba(212,131,10,0.3);
+    transition: transform 0.15s, opacity 0.15s;
+  }
+  .btn-next:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-next:not(:disabled):hover { transform: translateY(-1px); }
+  .btn-analyze {
+    background: linear-gradient(135deg, #2D5A1B, #4A8A2A);
+    color: #fff; border: none; border-radius: 10px;
+    padding: 14px 28px; font-size: 15px; cursor: pointer;
+    font-weight: bold; margin-left: auto;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 16px rgba(45,90,27,0.3);
+    transition: transform 0.15s, opacity 0.15s;
+  }
+  .btn-analyze:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-analyze:not(:disabled):hover { transform: translateY(-1px); }
+  .error-txt { color: #c0392b; font-size: 13px; text-align: center; margin-top: 8px; font-family: Arial, sans-serif; }
+
+  /* LOADING */
+  #loading {
+    display: none; flex-direction: column; align-items: center;
+    justify-content: center; min-height: 80vh;
+    padding: 24px; text-align: center;
+  }
+  .loading-paw { font-size: 64px; margin-bottom: 16px; animation: pulse 1.4s ease-in-out infinite; }
+  .loading-title { font-size: 22px; margin-bottom: 8px; }
+  .loading-text { font-size: 15px; color: #5C4A2A; max-width: 300px; }
+  @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.12)} }
+
+  /* RESULT */
+  #result { max-width: 500px; margin: 0 auto; padding: 24px 20px 48px; display: none; }
+  .result-header { text-align: center; margin-bottom: 24px; }
+  .result-title { font-size: 24px; font-weight: bold; margin-top: 8px; }
+  .section { margin-bottom: 28px; }
+  .section-title { font-size: 17px; font-weight: bold; margin-bottom: 14px; color: #1A1208; border-bottom: 2px solid rgba(212,131,10,0.2); padding-bottom: 6px; }
+  .profile-text { font-size: 15px; color: #3D2B0E; line-height: 1.6; background: #fff; border-radius: 12px; padding: 14px 16px; border: 1px solid #EDD9B0; }
+  .race-card { background: #fff; border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; border: 1px solid #EDD9B0; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+  .race-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .race-name { font-size: 16px; font-weight: bold; color: #8B4513; }
+  .race-score { font-size: 12px; color: #4A8A2A; font-weight: bold; font-family: Arial, sans-serif; }
+  .score-bar { height: 5px; background: #EDD9B0; border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
+  .score-fill { height: 100%; background: linear-gradient(90deg, #4A8A2A, #7AC94A); border-radius: 10px; }
+  .race-list { margin: 0; padding: 0; list-style: none; }
+  .race-list li { font-size: 13px; color: #3D2B0E; margin-bottom: 4px; line-height: 1.4; }
+  .decon-card { background: #FFF5F5; border-radius: 10px; padding: 12px 14px; margin-bottom: 10px; border: 1px solid #F5C6C6; }
+  .decon-name { font-size: 15px; color: #8B2020; font-weight: bold; }
+  .decon-reason { font-size: 13px; color: #5C3030; margin-top: 4px; line-height: 1.4; }
+  .vigilance-list { margin: 0; padding: 0; list-style: none; }
+  .vigilance-list li { font-size: 14px; color: #3D2B0E; margin-bottom: 8px; line-height: 1.5; background: #FFFBF0; border-radius: 8px; padding: 8px 12px; border: 1px solid #EDD9B0; }
+  .conseil-card { background: linear-gradient(135deg, rgba(212,131,10,0.08), rgba(212,131,10,0.04)); border: 1.5px solid #D4830A; border-radius: 16px; padding: 20px; display: flex; gap: 14px; align-items: flex-start; margin-bottom: 24px; }
+  .conseil-avatar { font-size: 36px; flex-shrink: 0; }
+  .conseil-author { font-size: 12px; font-weight: bold; color: #D4830A; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; font-family: Arial, sans-serif; }
+  .conseil-text { font-size: 14px; color: #1A1208; line-height: 1.6; }
+  .cta-box { background: #1A1208; border-radius: 14px; padding: 20px; text-align: center; margin-bottom: 16px; }
+  .cta-text { color: #EDD9B0; font-size: 15px; margin-bottom: 12px; }
+  .btn-site { display: inline-block; background: #D4830A; color: #fff; padding: 12px 24px; border-radius: 10px; font-size: 14px; font-weight: bold; text-decoration: none; font-family: Arial, sans-serif; }
+  .btn-restart { display: block; width: 100%; background: transparent; border: 1.5px solid #C8B090; color: #8B7355; border-radius: 10px; padding: 12px; font-size: 14px; cursor: pointer; font-family: Arial, sans-serif; margin-top: 8px; }
+</style>
+</head>
+<body>
+
+<!-- LANDING -->
+<div id="landing">
+  <div class="badge">Art'mony The Lobo</div>
+  <div class="paw-big">🐾</div>
+  <h1>Quel chien est fait pour vous ?</h1>
+  <p class="subtitle">Avant d'adopter ou d'acheter un chien, une erreur de choix peut être lourde de conséquences — pour vous et pour l'animal.</p>
+  <p class="subtitle">Antonio Rita, éducateur comportementaliste à Tourcoing, vous propose une <strong>pré-étude personnalisée</strong> : un questionnaire approfondi suivi d'une analyse IA professionnelle qui identifie les races compatibles avec votre mode de vie.</p>
+  <div class="features">
+    <div class="feat-row"><span>✅</span><span>8 thématiques analysées (logement, expérience, famille, budget...)</span></div>
+    <div class="feat-row"><span>🐕</span><span>Races recommandées et déconseillées avec explications</span></div>
+    <div class="feat-row"><span>👨‍💼</span><span>Conseil personnalisé d'un professionnel certifié</span></div>
+    <div class="feat-row"><span>⚡</span><span>Résultat immédiat après le questionnaire</span></div>
+  </div>
+  <div class="price-box">
+    <span class="price">50 €</span>
+    <span class="price-label">paiement unique et sécurisé</span>
+  </div>
+  <a href="PAYPAL_LINK_ICI" target="_blank" class="btn-paypal">💳 Payer par PayPal et accéder au questionnaire</a>
+  <button class="btn-demo" onclick="startQuiz()">▶ Voir une démo (sans paiement)</button>
+  <p class="footer-txt">Art'mony The Lobo — Tourcoing (Nord) · Métropole lilloise</p>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz">
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  <div class="progress-txt" id="progress-txt"></div>
+  <div class="q-icon" id="q-icon"></div>
+  <div class="q-theme" id="q-theme"></div>
+  <h2 class="q-question" id="q-question"></h2>
+  <div class="options" id="options"></div>
+  <p class="error-txt" id="error-txt" style="display:none"></p>
+  <div class="nav-row">
+    <button class="btn-back" id="btn-back" onclick="prevQ()" style="display:none">← Retour</button>
+    <button class="btn-next" id="btn-next" onclick="nextQ()" disabled>Suivant →</button>
+    <button class="btn-analyze" id="btn-analyze" onclick="analyzeProfile()" disabled style="display:none">🔍 Analyser mon profil</button>
+  </div>
+</div>
+
+<!-- LOADING -->
+<div id="loading">
+  <div class="loading-paw">🐾</div>
+  <h2 class="loading-title">Analyse en cours...</h2>
+  <p class="loading-text">Antonio analyse votre profil et identifie les chiens qui vous correspondent.</p>
+</div>
+
+<!-- RESULT -->
+<div id="result"></div>
+
+<script>
+const QUESTIONS = [
+  { id:"logement", theme:"Votre logement", icon:"🏠", question:"Où vivez-vous ?", type:"single", options:[
+    {value:"maison_jardin",label:"Maison avec jardin clôturé"},
+    {value:"maison_sans_jardin",label:"Maison sans jardin / jardin non clôturé"},
+    {value:"appart_grand",label:"Appartement spacieux (>60m²)"},
+    {value:"appart_petit",label:"Appartement petit (<60m²)"}
+  ]},
+  { id:"activite", theme:"Votre activité physique", icon:"🏃", question:"Comment décririez-vous votre mode de vie ?", type:"single", options:[
+    {value:"tres_actif",label:"Très actif — sport régulier, sorties longues"},
+    {value:"actif",label:"Actif — marches quotidiennes, sorties régulières"},
+    {value:"modere",label:"Modéré — quelques sorties par semaine"},
+    {value:"sedentaire",label:"Plutôt sédentaire — sorties courtes"}
+  ]},
+  { id:"experience", theme:"Votre expérience", icon:"🐾", question:"Avez-vous déjà eu un chien ?", type:"single", options:[
+    {value:"expert",label:"Oui, plusieurs chiens avec éducation travaillée"},
+    {value:"experience",label:"Oui, un ou plusieurs chiens"},
+    {value:"enfance",label:"Oui, dans mon enfance (pas en tant que responsable)"},
+    {value:"jamais",label:"Non, premier chien"}
+  ]},
+  { id:"solitude", theme:"Temps seul", icon:"⏰", question:"Combien d'heures par jour le chien serait-il seul ?", type:"single", options:[
+    {value:"jamais",label:"Jamais ou presque — télétravail / retraite"},
+    {value:"peu",label:"Moins de 3h par jour"},
+    {value:"modere",label:"3 à 6h par jour"},
+    {value:"beaucoup",label:"Plus de 6h par jour"}
+  ]},
+  { id:"famille", theme:"Composition du foyer", icon:"👨‍👩‍👧", question:"Qui vit avec vous ? (plusieurs choix possibles)", type:"multi", options:[
+    {value:"seul",label:"Je vis seul(e)"},
+    {value:"adultes",label:"Adultes uniquement"},
+    {value:"enfants_jeunes",label:"Enfants de moins de 6 ans"},
+    {value:"enfants_grands",label:"Enfants de 6 à 15 ans"},
+    {value:"seniors",label:"Personnes âgées / séniors"},
+    {value:"autres_animaux",label:"Autres animaux"}
+  ]},
+  { id:"budget", theme:"Budget", icon:"💶", question:"Quel budget mensuel pouvez-vous consacrer à votre chien ?", type:"single", options:[
+    {value:"faible",label:"Moins de 80€/mois"},
+    {value:"moyen",label:"80 à 150€/mois"},
+    {value:"confortable",label:"150 à 300€/mois"},
+    {value:"eleve",label:"Plus de 300€/mois"}
+  ]},
+  { id:"allergies", theme:"Tolérance physique", icon:"🌿", question:"Avez-vous des contraintes liées au poil ou aux allergies ?", type:"single", options:[
+    {value:"aucune",label:"Aucune contrainte"},
+    {value:"peu_poil",label:"Je préfère un chien qui perd peu de poils"},
+    {value:"allergie_legere",label:"Légère sensibilité — préfère races hypoallergéniques"},
+    {value:"allergie_forte",label:"Allergie confirmée aux poils de chien"}
+  ]},
+  { id:"objectif", theme:"Votre objectif", icon:"🎯", question:"Pourquoi souhaitez-vous un chien ? (plusieurs choix possibles)", type:"multi", options:[
+    {value:"compagnie",label:"Compagnie / lien affectif"},
+    {value:"sport",label:"Sport / activités physiques ensemble"},
+    {value:"garde",label:"Garde / sécurité du foyer"},
+    {value:"enfants",label:"Compagnon pour mes enfants"},
+    {value:"travail_canin",label:"Activités canines (agility, obédience, pistage...)"},
+    {value:"soutien",label:"Soutien émotionnel / chien de réconfort"}
+  ]}
+];
+
+let currentQ = 0;
+let answers = {};
+
+function show(id) {
+  ['landing','quiz','loading','result'].forEach(s => {
+    const el = document.getElementById(s);
+    el.style.display = 'none';
+  });
+  const target = document.getElementById(id);
+  target.style.display = (id === 'loading') ? 'flex' : 'block';
+}
+
+function startQuiz() {
+  currentQ = 0;
+  answers = {};
+  show('quiz');
+  renderQ();
+}
+
+function renderQ() {
+  const q = QUESTIONS[currentQ];
+  document.getElementById('progress-fill').style.width = ((currentQ+1)/QUESTIONS.length*100)+'%';
+  document.getElementById('progress-txt').textContent = 'Question '+(currentQ+1)+' / '+QUESTIONS.length;
+  document.getElementById('q-icon').textContent = q.icon;
+  document.getElementById('q-theme').textContent = q.theme;
+  document.getElementById('q-question').textContent = q.question;
+  document.getElementById('error-txt').style.display = 'none';
+
+  const optDiv = document.getElementById('options');
+  optDiv.innerHTML = '';
+  q.options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-btn';
+    btn.textContent = opt.label;
+    const isSelected = q.type === 'multi'
+      ? (answers[q.id]||[]).includes(opt.value)
+      : answers[q.id] === opt.value;
+    if (isSelected) { btn.classList.add('selected'); btn.textContent = '✓ ' + opt.label; }
+    btn.onclick = () => handleAnswer(q.id, opt.value, q.type === 'multi');
+    optDiv.appendChild(btn);
+  });
+
+  document.getElementById('btn-back').style.display = currentQ > 0 ? 'block' : 'none';
+  const isLast = currentQ === QUESTIONS.length - 1;
+  document.getElementById('btn-next').style.display = isLast ? 'none' : 'block';
+  document.getElementById('btn-analyze').style.display = isLast ? 'block' : 'none';
+  updateNav();
+}
+
+function handleAnswer(qId, value, isMulti) {
+  if (isMulti) {
+    const prev = answers[qId] || [];
+    answers[qId] = prev.includes(value) ? prev.filter(v=>v!==value) : [...prev, value];
+  } else {
+    answers[qId] = value;
+  }
+  renderQ();
+}
+
+function canNext() {
+  const q = QUESTIONS[currentQ];
+  const ans = answers[q.id];
+  return q.type === 'multi' ? (ans && ans.length > 0) : !!ans;
+}
+
+function updateNav() {
+  const ok = canNext();
+  document.getElementById('btn-next').disabled = !ok;
+  document.getElementById('btn-analyze').disabled = !ok;
+}
+
+function nextQ() {
+  if (!canNext()) return;
+  currentQ++;
+  renderQ();
+}
+
+function prevQ() {
+  if (currentQ > 0) { currentQ--; renderQ(); }
+}
+
+function buildPrompt() {
+  const details = QUESTIONS.map(q => {
+    const ans = answers[q.id];
+    if (!ans) return null;
+    if (Array.isArray(ans)) {
+      const labels = ans.map(v => q.options.find(o=>o.value===v)?.label).join(', ');
+      return q.theme + ' : ' + labels;
+    }
+    const label = q.options.find(o=>o.value===ans)?.label;
+    return q.theme + ' : ' + label;
+  }).filter(Boolean).join('\n');
+
+  return `Tu es Antonio Rita, éducateur canin comportementaliste professionnel basé à Tourcoing (Nord, France), spécialisé en éducation positive et comportementalisme. Tu as une expérience en compétition d'obédience avec ton Berger Allemand Hatchi.
+
+Un futur propriétaire de chien vient de remplir un questionnaire de pré-étude. Voici son profil :
+
+${details}
+
+En tant qu'expert, génère une analyse personnalisée structurée en JSON avec exactement ce format :
+{
+  "resume_profil": "2-3 phrases résumant le profil du propriétaire et ses atouts/points d'attention",
+  "races_recommandees": [
+    {"race": "Nom de la race","compatibilite": 95,"raisons": ["raison 1","raison 2","raison 3"]}
+  ],
+  "races_deconseillees": [
+    {"race": "Nom de la race","raison": "Explication claire et bienveillante"}
+  ],
+  "points_vigilance": ["point 1","point 2","point 3"],
+  "conseil_antonio": "Un conseil personnalisé et humain d'Antonio Rita, mentionnant son expertise et proposant un accompagnement éducatif Art'mony The Lobo"
+}
+
+Propose 4 à 5 races recommandées et 3 races déconseillées. Sois précis, bienveillant, professionnel. Réponds UNIQUEMENT en JSON valide, sans markdown ni backticks.`;
+}
+
+async function analyzeProfile() {
+  if (!canNext()) return;
+  show('loading');
+  try {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "anthropic-dangerous-direct-browser-access": "true"
+      },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1500,
+        messages: [{role:"user", content: buildPrompt()}]
+      })
+    });
+    const data = await response.json();
+    const text = data.content?.map(b=>b.text||'').join('') || '';
+    const clean = text.replace(/```json|```/g,'').trim();
+    const r = JSON.parse(clean);
+    renderResult(r);
+  } catch(e) {
+    show('quiz');
+    const errEl = document.getElementById('error-txt');
+    errEl.textContent = 'Une erreur est survenue. Veuillez réessayer.';
+    errEl.style.display = 'block';
+  }
+}
+
+function renderResult(r) {
+  const el = document.getElementById('result');
+  let racesHtml = (r.races_recommandees||[]).map(rc => `
+    <div class="race-card">
+      <div class="race-header">
+        <span class="race-name">${rc.race}</span>
+        <span class="race-score">${rc.compatibilite}% compatible</span>
+      </div>
+      <div class="score-bar"><div class="score-fill" style="width:${rc.compatibilite}%"></div></div>
+      <ul class="race-list">${(rc.raisons||[]).map(r=>`<li>🐾 ${r}</li>`).join('')}</ul>
+    </div>`).join('');
+
+  let deconHtml = (r.races_deconseillees||[]).map(rc => `
+    <div class="decon-card">
+      <div class="decon-name">${rc.race}</div>
+      <p class="decon-reason">${rc.raison}</p>
+    </div>`).join('');
+
+  let vigilHtml = (r.points_vigilance||[]).map(p=>`<li>⚡ ${p}</li>`).join('');
+
+  el.innerHTML = `
+    <div class="result-header">
+      <div class="badge">Art'mony The Lobo</div>
+      <h1 class="result-title">Votre analyse personnalisée</h1>
+    </div>
+    <div class="section">
+      <h2 class="section-title">📋 Votre profil</h2>
+      <p class="profile-text">${r.resume_profil}</p>
+    </div>
+    <div class="section">
+      <h2 class="section-title">✅ Races recommandées</h2>
+      ${racesHtml}
+    </div>
+    <div class="section">
+      <h2 class="section-title">⚠️ Races déconseillées</h2>
+      ${deconHtml}
+    </div>
+    <div class="section">
+      <h2 class="section-title">💡 Points de vigilance</h2>
+      <ul class="vigilance-list">${vigilHtml}</ul>
+    </div>
+    <div class="conseil-card">
+      <div class="conseil-avatar">🐕‍🦺</div>
+      <div>
+        <div class="conseil-author">Antonio Rita — Art'mony The Lobo</div>
+        <p class="conseil-text">${r.conseil_antonio}</p>
+      </div>
+    </div>
+    <div class="cta-box">
+      <p class="cta-text">Besoin d'un accompagnement éducatif ?</p>
+      <a href="https://antoniorita.jimdofree.com" target="_blank" class="btn-site">Visiter mon site</a>
+    </div>
+    <button class="btn-restart" onclick="restart()">↩ Recommencer</button>
+  `;
+  show('result');
+}
+
+function restart() {
+  answers = {};
+  currentQ = 0;
+  show('landing');
+}
+</script>
+</body>
+</html>
