@@ -462,7 +462,7 @@ async function analyzeProfile() {
   } catch(e) {
     show('quiz');
     const errEl = document.getElementById('error-txt');
-    errEl.textContent = 'Une erreur est survenue. Veuillez réessayer.';
+    errEl.textContent = 'Erreur : ' + (e.message || JSON.stringify(e));
     errEl.style.display = 'block';
   }
 }
