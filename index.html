@@ -456,7 +456,12 @@ async function analyzeProfile() {
       })
     });
     const data = await response.json();
+    console.log('API response:', JSON.stringify(data));
     const text = data.content?.map(b=>b.text||'').join('') || '';
+    console.log('Text:', text);
+    if (!text) {
+      throw new Error('Réponse vide de l\'API. Status: ' + response.status + ' Error: ' + JSON.stringify(data.error));
+    }
     const clean = text.replace(/```json|```/g,'').trim();
     const r = JSON.parse(clean);
     renderResult(r);
