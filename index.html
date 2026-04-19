@@ -226,6 +226,12 @@ const QUESTIONS = [
   { id:"adresse", theme:"Vos coordonnées", icon:"📍", question:"Votre adresse postale", type:"text" },
   { id:"email", theme:"Vos coordonnées", icon:"📧", question:"Votre adresse email", type:"text" },
   { id:"race_souhaitee", theme:"Race souhaitée", icon:"🐕", question:"Avez-vous une race en tête ? (si oui, laquelle)", type:"text" },
+  { id:"age_souhaite", theme:"Âge du chien souhaité", icon:"📅", question:"Quel âge de chien souhaitez-vous ?", type:"single", options:[
+    {value:"chiot",label:"Chiot (0 à 6 mois)"},
+    {value:"adolescent",label:"Adolescent (6 à 18 mois)"},
+    {value:"adulte",label:"Adulte (18 mois et plus)"},
+    {value:"peu_importe",label:"Peu importe l'âge"}
+  ]},
   { id:"logement", theme:"Votre logement", icon:"🏠", question:"Où vivez-vous ?", type:"single", options:[
     {value:"maison_jardin",label:"Maison avec jardin clôturé"},
     {value:"maison_sans_jardin",label:"Maison sans jardin / jardin non clôturé"},
@@ -277,6 +283,24 @@ const QUESTIONS = [
     {value:"enfants",label:"Compagnon pour mes enfants"},
     {value:"travail_canin",label:"Activités canines (agility, obédience, pistage...)"},
     {value:"soutien",label:"Soutien émotionnel / chien de réconfort"}
+  ]},
+  { id:"temperament", theme:"Votre caractère", icon:"🧠", question:"Comment décririez-vous votre tempérament ?", type:"single", options:[
+    {value:"calme",label:"Calme et posé(e)"},
+    {value:"dynamique",label:"Dynamique et enthousiaste"},
+    {value:"autoritaire",label:"Autoritaire et structuré(e)"},
+    {value:"doux",label:"Doux(ce) et affectueux(se)"}
+  ]},
+  { id:"tolerance", theme:"Votre caractère", icon:"😤", question:"Comment réagissez-vous face aux bêtises d'un chien ?", type:"single", options:[
+    {value:"derange_beaucoup",label:"Ça me dérange beaucoup"},
+    {value:"derange_peu",label:"Ça me dérange un peu"},
+    {value:"patient",label:"Je peux gérer avec patience"},
+    {value:"indifferent",label:"Ça ne me pose pas de problème"}
+  ]},
+  { id:"education", theme:"Votre caractère", icon:"🎓", question:"Quel est votre rapport à l'éducation canine ?", type:"single", options:[
+    {value:"aime_encadrer",label:"J'aime encadrer et éduquer"},
+    {value:"deja_eduque",label:"Je préfère un chien déjà éduqué"},
+    {value:"investir",label:"Je suis prêt(e) à investir du temps en formation"},
+    {value:"autonome",label:"Je veux un chien autonome et indépendant"}
   ]}
 ];
 
