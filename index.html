@@ -226,6 +226,15 @@ const QUESTIONS = [
   { id:"nom", theme:"Vos coordonnées", icon:"👤", question:"Votre nom et prénom", type:"text" },
   { id:"adresse", theme:"Vos coordonnées", icon:"📍", question:"Votre adresse postale", type:"text" },
   { id:"email", theme:"Vos coordonnées", icon:"📧", question:"Votre adresse email", type:"text" },
+  { id:"annee_naissance", theme:"Votre profil", icon:"🎂", question:"Quelle est votre année de naissance ?", type:"text" },
+  { id:"sante", theme:"Votre santé & mobilité", icon:"💪", question:"Comment décririez-vous votre état de santé et votre mobilité ?", type:"single", options:[
+    {value:"excellente",label:"Excellente — aucune limitation physique"},
+    {value:"bonne",label:"Bonne — quelques petites limitations mineures"},
+    {value:"moderee",label:"Modérée — problèmes articulaires ou de dos"},
+    {value:"reduite",label:"Mobilité réduite — difficultés à marcher longtemps"},
+    {value:"autre",label:"Autre (à préciser)"}
+  ]},
+  { id:"sante_precision", theme:"Votre santé & mobilité", icon:"📝", question:"Précisez votre situation de santé si nécessaire", type:"text" },
   { id:"race_souhaitee", theme:"Race souhaitée", icon:"🐕", question:"Avez-vous une race en tête ? (si oui, laquelle)", type:"text" },
   { id:"age_souhaite", theme:"Âge du chien souhaité", icon:"📅", question:"Quel âge de chien souhaitez-vous ?", type:"single", options:[
     {value:"chiot",label:"Chiot (0 à 6 mois)"},
@@ -346,6 +355,13 @@ function renderQ() {
     if (q.id === 'race_souhaitee') {
       input.placeholder = 'Si vous avez une race en tête (facultatif)';
     }
+    if (q.id === 'sante_precision') {
+      input.placeholder = 'Décrivez votre situation si vous le souhaitez (facultatif)';
+    }
+    if (q.id === 'annee_naissance') {
+      input.placeholder = 'Ex : 1975';
+      input.maxLength = 4;
+    }
     input.oninput = () => { answers[q.id] = input.value; updateNav(); };
     optDiv.appendChild(input);
   } else {
@@ -382,7 +398,7 @@ function handleAnswer(qId, value, isMulti) {
 function canNext() {
   const q = QUESTIONS[currentQ];
   const ans = answers[q.id];
-  if (q.id === 'race_souhaitee') return true; // facultatif
+  if (q.id === 'race_souhaitee' || q.id === 'sante_precision') return true; // facultatif
   if (q.type === 'text') return !!(ans && ans.trim().length > 0);
   return q.type === 'multi' ? (ans && ans.length > 0) : !!ans;
 }
@@ -396,11 +412,22 @@ function updateNav() {
 function nextQ() {
   if (!canNext()) return;
   currentQ++;
+  // Sauter "sante_precision" si la santé n'est pas "autre"
+  if (QUESTIONS[currentQ]?.id === 'sante_precision' && answers['sante'] !== 'autre') {
+    currentQ++;
+  }
   renderQ();
 }
 
 function prevQ() {
-  if (currentQ > 0) { currentQ--; renderQ(); }
+  if (currentQ > 0) {
+    currentQ--;
+    // Sauter "sante_precision" en retour si santé n'est pas "autre"
+    if (QUESTIONS[currentQ]?.id === 'sante_precision' && answers['sante'] !== 'autre') {
+      currentQ--;
+    }
+    renderQ();
+  }
 }
 
 function buildPrompt() {
@@ -435,7 +462,7 @@ En tant qu'expert, génère une analyse personnalisée structurée en JSON avec 
   "conseil_antonio": "Un conseil personnalisé et humain d'Antonio Rita, mentionnant son expertise et proposant un accompagnement éducatif Art'mony The Lobo"
 }
 
-Propose 4 à 5 races recommandées et 3 races déconseillées. Sois précis, bienveillant, professionnel. Réponds UNIQUEMENT en JSON valide, sans markdown ni backticks.`;
+Propose 4 à 5 races recommandées et 3 races déconseillées. IMPORTANT : ne recommande QUE des races officiellement reconnues par la FCI (Fédération Cynologique Internationale). N'inclus jamais de croisés, de "designer dogs" ou de races non reconnues (pas de Labradoodle, Goldendoodle, Cavapoo, Cockapoo, etc.). Sois précis, bienveillant, professionnel. Réponds UNIQUEMENT en JSON valide, sans markdown ni backticks.`;
 }
 
 async function analyzeProfile() {
