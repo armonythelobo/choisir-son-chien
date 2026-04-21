@@ -317,6 +317,9 @@ const QUESTIONS = [
 let currentQ = 0;
 let answers = {};
 
+// Démarrer directement sur le quiz
+window.onload = function() { startQuiz(); };
+
 function show(id) {
   ['landing','quiz','loading','result'].forEach(s => {
     const el = document.getElementById(s);
