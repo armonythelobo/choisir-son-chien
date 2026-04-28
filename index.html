@@ -465,7 +465,7 @@ En tant qu'expert, génère une analyse personnalisée structurée en JSON avec 
   "conseil_antonio": "Un conseil personnalisé et humain d'Antonio Rita, mentionnant mon expertise et proposant un accompagnement éducatif Art'mony The Lobo"
 }
 
-Propose 4 à 5 races recommandées et 3 races déconseillées basées UNIQUEMENT sur les réponses réelles du questionnaire ci-dessus. Ne jamais inventer des informations qui ne sont pas dans les réponses. Ne recommande QUE des races officiellement reconnues par la FCI. N'inclus jamais de croisés ou "designer dogs". Le resume_profil doit parler au client en utilisant "tu/vous" et se baser STRICTEMENT sur ses réponses réelles. Réponds UNIQUEMENT en JSON valide, sans markdown ni backticks.`;
+Propose 4 à 5 races recommandées et 3 races déconseillées basées UNIQUEMENT sur les réponses réelles du questionnaire ci-dessus. INTERDIT : inventer des informations, des professions, des compétences ou des caractéristiques qui ne sont pas dans les réponses. INTERDIT : dire que le client est professionnel ou expert sauf si explicitement indiqué. Le resume_profil doit utiliser "vous" et se baser STRICTEMENT sur les réponses exactes fournies. Ne recommande QUE des races FCI officielles. Réponds UNIQUEMENT en JSON valide, sans markdown ni backticks.`;
 }
 
 async function analyzeProfile() {
