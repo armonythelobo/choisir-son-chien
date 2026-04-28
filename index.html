@@ -168,6 +168,12 @@
   .cta-text { color: #EDD9B0; font-size: 15px; margin-bottom: 12px; }
   .btn-site { display: inline-block; background: #D4830A; color: #fff; padding: 12px 24px; border-radius: 10px; font-size: 14px; font-weight: bold; text-decoration: none; font-family: Arial, sans-serif; }
   .btn-restart { display: block; width: 100%; background: transparent; border: 1.5px solid #C8B090; color: #8B7355; border-radius: 10px; padding: 12px; font-size: 14px; cursor: pointer; font-family: Arial, sans-serif; margin-top: 8px; }
+@media print {
+  #landing, #quiz, #loading, .btn-restart, .btn-analyze { display: none !important; }
+  #result { display: block !important; }
+  .cta-box { display: none !important; }
+  body { background: white !important; }
+}
 </style>
 </head>
 <body>
@@ -554,6 +560,7 @@ function renderResult(r) {
       <p class="cta-text">Besoin d'un accompagnement éducatif ?</p>
       <a href="https://antoniorita.jimdofree.com" target="_blank" class="btn-site">Visiter mon site</a>
     </div>
+    <button class="btn-restart" onclick="window.print()" style="background:#D4830A;color:#fff;border:none;margin-bottom:8px;">🖨️ Imprimer mon analyse</button>
     <button class="btn-restart" onclick="restart()">↩ Recommencer</button>
   `;
   show('result');
