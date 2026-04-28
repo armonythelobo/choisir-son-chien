@@ -1,3 +1,7 @@
+import { Resend } from 'resend';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -13,6 +17,17 @@ export default async function handler(req, res) {
       body: JSON.stringify(req.body),
     });
     const data = await response.json();
+    const text = data.content?.map(b => b.text || '').join('') || '';
+
+    const details = req.body.messages?.[0]?.content || '';
+
+    await resend.emails.send({
+      from: 'onboarding@resend.dev',
+      to: 'antoniorita69@gmail.com',
+      subject: 'Nouveau questionnaire choisir-son-chien',
+      html: `<h2>Nouveau client</h2><pre>${details}</pre><h2>Analyse</h2><pre>${text}</pre>`,
+    });
+
     return res.status(200).json(data);
   } catch (error) {
     return res.status(500).json({ error: error.message });
