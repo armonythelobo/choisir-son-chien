@@ -448,13 +448,13 @@ function buildPrompt() {
 
   return `Tu es Antonio Rita, éducateur canin comportementaliste professionnel basé à Tourcoing (Nord, France), spécialisé en éducation positive et comportementalisme. Tu as une expérience en compétition d'obédience avec ton Berger Allemand Hatchi.
 
-Un futur propriétaire de chien vient de remplir un questionnaire de pré-étude. Voici son profil :
+Tu viens de remplir un questionnaire de pré-étude. Voici ton profil :
 
 ${details}
 
 En tant qu'expert, génère une analyse personnalisée structurée en JSON avec exactement ce format :
 {
-  "resume_profil": "2-3 phrases résumant le profil du propriétaire et ses atouts/points d'attention",
+  "resume_profil": "2-3 phrases résumant ton profil et tes atouts/points d'attention",
   "races_recommandees": [
     {"race": "Nom de la race","compatibilite": 95,"raisons": ["raison 1","raison 2","raison 3"]}
   ],
@@ -462,7 +462,7 @@ En tant qu'expert, génère une analyse personnalisée structurée en JSON avec 
     {"race": "Nom de la race","raison": "Explication claire et bienveillante"}
   ],
   "points_vigilance": ["point 1","point 2","point 3"],
-  "conseil_antonio": "Un conseil personnalisé et humain d'Antonio Rita, mentionnant son expertise et proposant un accompagnement éducatif Art'mony The Lobo"
+  "conseil_antonio": "Un conseil personnalisé et humain d'Antonio Rita, mentionnant mon expertise et proposant un accompagnement éducatif Art'mony The Lobo"
 }
 
 Propose 4 à 5 races recommandées et 3 races déconseillées. IMPORTANT : ne recommande QUE des races officiellement reconnues par la FCI (Fédération Cynologique Internationale). N'inclus jamais de croisés, de "designer dogs" ou de races non reconnues (pas de Labradoodle, Goldendoodle, Cavapoo, Cockapoo, etc.). Sois précis, bienveillant, professionnel. Réponds UNIQUEMENT en JSON valide, sans markdown ni backticks.`;
