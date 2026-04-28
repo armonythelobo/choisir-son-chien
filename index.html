@@ -362,7 +362,7 @@ function renderQ() {
       input.placeholder = 'Décrivez votre situation si vous le souhaitez (facultatif)';
     }
     if (q.id === 'annee_naissance') {
-      input.placeholder = 'Ex : 1975';
+      input.placeholder = 'Ex : 55';
       input.maxLength = 4;
     }
     input.oninput = () => { answers[q.id] = input.value; updateNav(); };
