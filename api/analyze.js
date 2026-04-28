@@ -14,21 +14,33 @@ export default async function handler(req, res) {
     });
     const data = await response.json();
     const text = data.content?.map(b => b.text || '').join('') || '';
-    const details = req.body.messages?.[0]?.content || '';
+    const promptContent = req.body.messages?.[0]?.content || '';
 
-    await fetch('https://api.resend.com/emails', {
+    const emailMatch = promptContent.match(/Vos coordonnées : ([^\n]+@[^\n]+)/);
+    const clientEmail = emailMatch ? emailMatch[1].trim() : null;
+
+    const emailBody = {
+      from: 'onboarding@resend.dev',
+      to: ['antoniorita69@gmail.com'],
+      subject: 'Nouveau questionnaire choisir-son-chien',
+      html: `<h2>Nouveau client</h2><pre style="white-space:pre-wrap">${promptContent}</pre><h2>Analyse Claude</h2><pre style="white-space:pre-wrap">${text}</pre>`,
+    };
+
+    if (clientEmail) {
+      emailBody.to.push(clientEmail);
+    }
+
+    const resendResponse = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
       },
-      body: JSON.stringify({
-        from: 'onboarding@resend.dev',
-        to: 'antoniorita69@gmail.com',
-        subject: 'Nouveau questionnaire choisir-son-chien',
-        html: `<h2>Nouveau client</h2><pre>${details}</pre><h2>Analyse</h2><pre>${text}</pre>`,
-      }),
+      body: JSON.stringify(emailBody),
     });
+
+    const resendData = await resendResponse.json();
+    console.log('Resend response:', JSON.stringify(resendData));
 
     return res.status(200).json(data);
   } catch (error) {
